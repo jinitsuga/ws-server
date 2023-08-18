@@ -4,6 +4,10 @@ const calendarRouter = require("./controllers/calendar");
 const dotenv = require("dotenv").config();
 const { google } = require("googleapis");
 
+const sheets = google.sheets("v4");
+
+const key = require("./key.json");
+
 const app = express();
 
 const port = 3000;
@@ -14,20 +18,18 @@ const auth2Client = new google.auth.OAuth2(
   process.env.redirect_uri
 );
 
-// console.log(auth2Client);
-
-const authUrl = auth2Client.generateAuthUrl({
-  access_type: "online",
+const auth = new google.auth.GoogleAuth({
+  credentials: key,
+  scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
 });
 
+// const authUrl = auth2Client.generateAuthUrl({
+//   access_type: "online",
+// });
 
-console.log(authUrl);
-
-app.get("/", (req, res) => {
-  res.status(200).send("hey world");
-});
+// console.log(auth);
 
 app.use("/api/", unsubsRouter);
-app.use("/api/", calendarRouter);
+app.use("/api/", unsubsRouter);
 
 app.listen(port, () => console.log("listening on port 3000..."));
