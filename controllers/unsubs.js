@@ -18,11 +18,12 @@ async function writeEmail(email) {
   const response = await sheets.spreadsheets.values.append({
     auth: client,
     spreadsheetId: "1oC8yPfq2_fWU7FV0q3PadSunM0uQ3iQFs-GJZnpHoqg",
-    range: "Lista de apps!A1:D",
+    range: "Lista de apps!B1:D",
     valueInputOption: "RAW",
     requestBody: {
-      range: "Lista de apps!A1:D",
-      values: [[email]],
+      range: "Lista de apps!B1:D",
+      majorDimension: "COLUMNS",
+      values: [["date"], [email]],
     },
   });
 }
