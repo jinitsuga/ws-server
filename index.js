@@ -32,4 +32,8 @@ const auth = new google.auth.GoogleAuth({
 app.use("/api/", unsubsRouter);
 app.use("/api/", unsubsRouter);
 
+app.use("/", (req, res) => {
+  res.send("hola capo");
+});
+
 app.listen(port, () => console.log("listening on port 3000..."));
